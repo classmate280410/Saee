@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Valentine</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&family=Dancing+Script:wght@700&display=swap" rel="stylesheet">
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+}
+
+body{
+font-family:Poppins,sans-serif;
+overflow:hidden;
+height:100vh;
+display:flex;
+justify-content:center;
+align-items:center;
+background:linear-gradient(-45deg,#ff4d8d,#ff85b5,#ffd6e7,#ff99cc);
+background-size:400% 400%;
+animation:bg 12s ease infinite;
+position:relative;
+}
+
+@keyframes bg{
+0%{background-position:0% 50%;}
+50%{background-position:100% 50%;}
+100%{background-position:0% 50%;}
+}
+
+.card{
+position:relative;
+z-index:5;
+width:90%;
+max-width:900px;
+padding:40px;
+text-align:center;
+border-radius:30px;
+background:rgba(255,255,255,.15);
+backdrop-filter:blur(18px);
+box-shadow:0 20px 60px rgba(0,0,0,.2);
+}
+
+h1{
+font-family:'Dancing Script',cursive;
+font-size:70px;
+color:white;
+text-shadow:0 0 20px hotpink;
+min-height:90px;
+}
+
+h2{
+color:white;
+margin-top:15px;
+font-size:28px;
+text-shadow:0 0 10px red;
+}
+
+.teddy{
+font-size:120px;
+margin:25px 0;
+animation:bounce 2s infinite;
+filter:drop-shadow(0 0 15px pink);
+}
+
+@keyframes bounce{
+0%,100%{transform:translateY(0);}
+50%{transform:translateY(-25px);}
+}
+
+.buttons{
+display:flex;
+justify-content:center;
+gap:20px;
+margin-top:30px;
+flex-wrap:wrap;
+}
+
+button{
+padding:16px 35px;
+border:none;
+border-radius:50px;
+font-size:20px;
+font-weight:bold;
+cursor:pointer;
+transition:.3s;
+}
+
+#yes{
+background:#ff2b72;
+color:white;
+box-shadow:0 0 20px hotpink;
+}
+
+#no{
+background:white;
+color:#ff2b72;
+}
+
+#hearts,
+#sparkles,
+#petals{
+position:absolute;
+top:0;
+left:0;
+width:100%;
+height:100%;
+overflow:hidden;
+pointer-events:none;
+}
+
+.heart{
+position:absolute;
+animation:heartFloat linear infinite;
+}
+
+.sparkle{
+position:absolute;
+width:4px;
+height:4px;
+background:white;
+border-radius:50%;
+animation:twinkle 2s infinite;
+}
+
+.petal{
+position:absolute;
+animation:fall linear infinite;
+}
+
+@keyframes heartFloat{
+
+0%{
+transform:translateY(100vh) scale(.5);
+opacity:0;
+}
+
+20%{
+opacity:1;
+}
+
+100%{
+transform:translateY(-120px) scale(1.5);
+opacity:0;
+}
+
+}
+
+@keyframes twinkle{
+
+0%,100%{
+opacity:.2;
+transform:scale(.5);
+}
+
+50%{
+opacity:1;
+transform:scale(2);
+}
+
+}
+
+@keyframes fall{
+
+0%{
+transform:translateY(-100px) rotate(0deg);
+}
+
+100%{
+transform:translateY(110vh) rotate(360deg);
+}
+
+}
+
+@media(max-width:700px){
+
+h1{
+font-size:45px;
+}
+
+h2{
+font-size:22px;
+}
+
+.teddy{
+font-size:90px;
+}
+
+button{
+width:150px;
+}
+
+}
+
+</style>
+</head>
+
+<body>
+
+<div id="hearts"></div>
+<div id="sparkles"></div>
+<div id="petals"></div>
+
+<div class="card">
+
+<div class="teddy">🧸</div>
+
+<h1 id="title"></h1>
+
+<h2>I LOVE YOU BACHA ❤️</h2>
+
+<div class="buttons">
+
+<button id="yes">YES ❤️</button>
+
+<button id="no">NO 😢</button>
+
+</div>
+
+</div>
+
+<script>
+
+const txt="Will You Be My Valentine, RUCHITA? ❤️";
+
+let i=0;
+
+function type(){
+
+if(i<txt.length){
+
+document.getElementById("title").innerHTML+=txt.charAt(i);
+
+i++;
+
+setTimeout(type,90);
+
+}
+
+}
+
+type();
+
+for(let i=0;i<30;i++){
+
+let h=document.createElement("div");
+
+h.className="heart";
+
+h.innerHTML="❤️";
+
+h.style.left=Math.random()*100+"vw";
+
+h.style.fontSize=(15+Math.random()*25)+"px";
+
+h.style.animationDuration=(5+Math.random()*6)+"s";
+
+h.style.animationDelay=Math.random()*5+"s";
+
+document.getElementById("hearts").appendChild(h);
+
+}
+
+for(let i=0;i<80;i++){
+
+let s=document.createElement("div");
+
+s.className="sparkle";
+
+s.style.left=Math.random()*100+"vw";
+
+s.style.top=Math.random()*100+"vh";
+
+s.style.animationDelay=Math.random()*2+"s";
+
+document.getElementById("sparkles").appendChild(s);
+
+}
+
+for(let i=0;i<25;i++){
+
+let p=document.createElement("div");
+
+p.className="petal";
+
+p.innerHTML="🌸";
+
+p.style.left=Math.random()*100+"vw";
+
+p.style.animationDuration=(5+Math.random()*7)+"s";
+
+p.style.animationDelay=Math.random()*4+"s";
+
+document.getElementById("petals").appendChild(p);
+
+}
+
+</script>
+
+</body>
+</html>
