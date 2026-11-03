@@ -1,307 +1,1124 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Valentine</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&family=Dancing+Script:wght@700&display=swap" rel="stylesheet">
+    <!-- =====================================
+         BASIC DOCUMENT CONFIGURATION
+    ====================================== -->
 
-<style>
+    <meta charset="UTF-8">
 
-*{
-margin:0;
-padding:0;
-box-sizing:border-box;
-}
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
 
-body{
-font-family:Poppins,sans-serif;
-overflow:hidden;
-height:100vh;
-display:flex;
-justify-content:center;
-align-items:center;
-background:linear-gradient(-45deg,#ff4d8d,#ff85b5,#ffd6e7,#ff99cc);
-background-size:400% 400%;
-animation:bg 12s ease infinite;
-position:relative;
-}
+    <meta name="theme-color"
+          content="#090616">
 
-@keyframes bg{
-0%{background-position:0% 50%;}
-50%{background-position:100% 50%;}
-100%{background-position:0% 50%;}
-}
+    <meta name="description"
+          content="A special Diwali greeting for Saee.
+          May her dreams shine brighter than the stars.">
 
-.card{
-position:relative;
-z-index:5;
-width:90%;
-max-width:900px;
-padding:40px;
-text-align:center;
-border-radius:30px;
-background:rgba(255,255,255,.15);
-backdrop-filter:blur(18px);
-box-shadow:0 20px 60px rgba(0,0,0,.2);
-}
+    <meta name="author"
+          content="A Friend">
 
-h1{
-font-family:'Dancing Script',cursive;
-font-size:70px;
-color:white;
-text-shadow:0 0 20px hotpink;
-min-height:90px;
-}
+    <title>Happy Diwali Saee | Festival of Lights</title>
 
-h2{
-color:white;
-margin-top:15px;
-font-size:28px;
-text-shadow:0 0 10px red;
-}
 
-.teddy{
-font-size:120px;
-margin:25px 0;
-animation:bounce 2s infinite;
-filter:drop-shadow(0 0 15px pink);
-}
+    <!-- =====================================
+         STYLESHEET
+    ====================================== -->
 
-@keyframes bounce{
-0%,100%{transform:translateY(0);}
-50%{transform:translateY(-25px);}
-}
+    <link rel="stylesheet" href="style.css">
 
-.buttons{
-display:flex;
-justify-content:center;
-gap:20px;
-margin-top:30px;
-flex-wrap:wrap;
-}
 
-button{
-padding:16px 35px;
-border:none;
-border-radius:50px;
-font-size:20px;
-font-weight:bold;
-cursor:pointer;
-transition:.3s;
-}
-
-#yes{
-background:#ff2b72;
-color:white;
-box-shadow:0 0 20px hotpink;
-}
-
-#no{
-background:white;
-color:#ff2b72;
-}
-
-#hearts,
-#sparkles,
-#petals{
-position:absolute;
-top:0;
-left:0;
-width:100%;
-height:100%;
-overflow:hidden;
-pointer-events:none;
-}
-
-.heart{
-position:absolute;
-animation:heartFloat linear infinite;
-}
-
-.sparkle{
-position:absolute;
-width:4px;
-height:4px;
-background:white;
-border-radius:50%;
-animation:twinkle 2s infinite;
-}
-
-.petal{
-position:absolute;
-animation:fall linear infinite;
-}
-
-@keyframes heartFloat{
-
-0%{
-transform:translateY(100vh) scale(.5);
-opacity:0;
-}
-
-20%{
-opacity:1;
-}
-
-100%{
-transform:translateY(-120px) scale(1.5);
-opacity:0;
-}
-
-}
-
-@keyframes twinkle{
-
-0%,100%{
-opacity:.2;
-transform:scale(.5);
-}
-
-50%{
-opacity:1;
-transform:scale(2);
-}
-
-}
-
-@keyframes fall{
-
-0%{
-transform:translateY(-100px) rotate(0deg);
-}
-
-100%{
-transform:translateY(110vh) rotate(360deg);
-}
-
-}
-
-@media(max-width:700px){
-
-h1{
-font-size:45px;
-}
-
-h2{
-font-size:22px;
-}
-
-.teddy{
-font-size:90px;
-}
-
-button{
-width:150px;
-}
-
-}
-
-</style>
 </head>
+
 
 <body>
 
-<div id="hearts"></div>
-<div id="sparkles"></div>
-<div id="petals"></div>
 
-<div class="card">
+    <!-- =====================================
+         BACKGROUND EFFECTS
+    ====================================== -->
 
-<div class="teddy">🧸</div>
+    <div class="background-scene" aria-hidden="true">
 
-<h1 id="title"></h1>
+        <div class="ambient-glow glow-one"></div>
 
-<h2>I LOVE YOU BACHA ❤️</h2>
+        <div class="ambient-glow glow-two"></div>
 
-<div class="buttons">
+        <div class="ambient-glow glow-three"></div>
 
-<button id="yes">YES ❤️</button>
+        <div class="stars-layer" id="starsLayer"></div>
 
-<button id="no">NO 😢</button>
+        <div class="particles-layer" id="particlesLayer"></div>
 
-</div>
+    </div>
 
-</div>
 
-<script>
+    <!-- FIREWORKS CANVAS -->
 
-const txt="Will You Be My Valentine, RUCHITA? ❤️";
+    <canvas id="fireworksCanvas"
+            aria-hidden="true">
+    </canvas>
 
-let i=0;
 
-function type(){
 
-if(i<txt.length){
+    <!-- =====================================
+         WEBSITE LOADER
+    ====================================== -->
 
-document.getElementById("title").innerHTML+=txt.charAt(i);
+    <div class="loader" id="loader">
 
-i++;
+        <div class="loader-diya">
 
-setTimeout(type,90);
+            🪔
 
-}
+        </div>
 
-}
 
-type();
+        <h2>
 
-for(let i=0;i<30;i++){
+            Preparing a little Diwali surprise...
 
-let h=document.createElement("div");
+        </h2>
 
-h.className="heart";
 
-h.innerHTML="❤️";
+        <div class="loader-track">
 
-h.style.left=Math.random()*100+"vw";
+            <div class="loader-fill"></div>
 
-h.style.fontSize=(15+Math.random()*25)+"px";
+        </div>
 
-h.style.animationDuration=(5+Math.random()*6)+"s";
 
-h.style.animationDelay=Math.random()*5+"s";
+        <p>
 
-document.getElementById("hearts").appendChild(h);
+            Made especially for Saee ✨
 
-}
+        </p>
 
-for(let i=0;i<80;i++){
+    </div>
 
-let s=document.createElement("div");
 
-s.className="sparkle";
 
-s.style.left=Math.random()*100+"vw";
+    <!-- =====================================
+         MAIN WEBSITE
+    ====================================== -->
 
-s.style.top=Math.random()*100+"vh";
+    <div class="main-wrapper" id="mainWrapper">
 
-s.style.animationDelay=Math.random()*2+"s";
 
-document.getElementById("sparkles").appendChild(s);
 
-}
+        <!-- =====================================
+             NAVIGATION
+        ====================================== -->
 
-for(let i=0;i<25;i++){
+        <header class="navbar">
 
-let p=document.createElement("div");
+            <a href="#home"
+               class="brand"
+               aria-label="Saee Diwali home">
 
-p.className="petal";
+                <span class="brand-icon">
 
-p.innerHTML="🌸";
+                    🪔
 
-p.style.left=Math.random()*100+"vw";
+                </span>
 
-p.style.animationDuration=(5+Math.random()*7)+"s";
+                <span class="brand-name">
 
-p.style.animationDelay=Math.random()*4+"s";
+                    Saee's Diwali
 
-document.getElementById("petals").appendChild(p);
+                </span>
 
-}
+            </a>
 
-</script>
+
+
+            <nav class="navigation">
+
+                <a href="#home">
+
+                    Home
+
+                </a>
+
+
+                <a href="#message">
+
+                    Special Message
+
+                </a>
+
+
+                <a href="#dream">
+
+                    Her Dreams
+
+                </a>
+
+
+                <a href="#shayari">
+
+                    Topper Shayari
+
+                </a>
+
+            </nav>
+
+
+
+            <div class="navbar-tag">
+
+                ✨ Festival Special
+
+            </div>
+
+
+        </header>
+
+
+
+
+        <!-- =====================================
+             HERO SECTION
+        ====================================== -->
+
+        <main>
+
+
+        <section class="hero-section" id="home">
+
+
+            <!-- Decorative Elements -->
+
+            <div class="hero-decoration decoration-left">
+
+                🪔
+
+            </div>
+
+
+            <div class="hero-decoration decoration-right">
+
+                🪔
+
+            </div>
+
+
+
+            <div class="hero-content">
+
+
+                <div class="hero-badge">
+
+                    <span class="badge-star">✦</span>
+
+                    THE FESTIVAL OF LIGHTS
+
+                    <span class="badge-star">✦</span>
+
+                </div>
+
+
+
+                <p class="hero-intro">
+
+                    A little celebration for a friend
+
+                </p>
+
+
+
+                <h1 class="hero-title">
+
+                    Happy
+
+                    <span class="gold-gradient">
+
+                        Diwali
+
+                    </span>
+
+                    <br>
+
+                    <span class="saee-name">
+
+                        Saee!
+
+                    </span>
+
+                </h1>
+
+
+
+                <div class="hero-divider">
+
+                    <span>✦</span>
+
+                    <span class="divider-line"></span>
+
+                    <span>✦</span>
+
+                </div>
+
+
+
+                <p class="hero-description">
+
+                    May your days sparkle with happiness,
+
+                    your dreams shine with confidence,
+
+                    and your future be brighter than
+
+                    a thousand Diwali lights.
+
+                </p>
+
+
+
+                <div class="hero-buttons">
+
+
+                    <a href="#message"
+                       class="button button-primary">
+
+                        Discover Your Surprise
+
+                        <span>↗</span>
+
+                    </a>
+
+
+                    <button class="button button-secondary"
+                            id="fireworksButton">
+
+                        ✨ Light Up The Sky
+
+                    </button>
+
+
+                </div>
+
+
+
+                <div class="hero-bottom-note">
+
+                    Scroll down for a little surprise
+
+                    <span class="scroll-arrow">↓</span>
+
+                </div>
+
+
+            </div>
+
+
+
+            <!-- Decorative Rangoli -->
+
+            <div class="rangoli-decoration"
+                 aria-hidden="true">
+
+                <div class="rangoli-outer">
+
+                    <div class="rangoli-inner">
+
+                        ✺
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+
+        </section>
+
+
+
+
+        <!-- =====================================
+             MESSAGE INTRODUCTION
+        ====================================== -->
+
+        <section class="message-section" id="message">
+
+
+            <div class="section-heading">
+
+
+                <span class="section-label">
+
+                    A SPECIAL NOTE
+
+                </span>
+
+
+                <h2>
+
+                    A Little Light,
+
+                    <span class="gold-gradient">
+
+                        A Little Happiness
+
+                    </span>
+
+                </h2>
+
+
+                <p>
+
+                    Not every surprise needs a reason.
+
+                    Sometimes, a simple wish is enough
+
+                    to make someone's festival special.
+
+                </p>
+
+
+            </div>
+
+
+
+            <!-- MAIN MESSAGE CARD -->
+
+            <article class="message-card">
+
+
+                <div class="card-top-decoration">
+
+                    <span>✦</span>
+
+                    <span>🪔</span>
+
+                    <span>✦</span>
+
+                </div>
+
+
+
+                <div class="message-content">
+
+
+                    <p class="message-greeting">
+
+                        Dear Saee,
+
+                    </p>
+
+
+
+                    <p class="message-paragraph">
+
+                        Wishing you a very Happy Diwali!
+
+                        May this beautiful festival bring
+
+                        lots of happiness, peace, positivity,
+
+                        and wonderful moments into your life.
+
+                    </p>
+
+
+
+                    <p class="message-paragraph">
+
+                        May every diya remind you that
+
+                        there is always a reason to shine,
+
+                        every new day bring fresh opportunities,
+
+                        and every challenge make you stronger.
+
+                    </p>
+
+
+
+                    <p class="message-paragraph">
+
+                        Keep smiling, keep exploring,
+
+                        keep learning, and never stop
+
+                        believing in the things you dream about.
+
+                    </p>
+
+
+
+                    <p class="message-highlight">
+
+                        Stay curious. Stay confident.
+
+                        Keep shining!
+
+                    </p>
+
+
+
+                    <div class="message-signature">
+
+                        With warm Diwali wishes,
+
+                        <br>
+
+                        A Friend ✨
+
+                    </div>
+
+
+                </div>
+
+
+
+                <div class="card-bottom-decoration">
+
+                    ✨ ॐ ✨
+
+                </div>
+
+
+            </article>
+
+
+        </section>
+
+
+
+
+        <!-- =====================================
+             JEE TOPPER DREAM SECTION
+        ====================================== -->
+
+        <section class="dream-section" id="dream">
+
+
+            <div class="section-heading">
+
+
+                <span class="section-label">
+
+                    THE DREAM IS BIG
+
+                </span>
+
+
+
+                <h2>
+
+                    Future
+
+                    <span class="gold-gradient">
+
+                        JEE Topper?
+
+                    </span>
+
+                </h2>
+
+
+
+                <p>
+
+                    A little motivation for someone
+
+                    with some seriously big academic dreams.
+
+                </p>
+
+
+            </div>
+
+
+
+            <!-- DREAM CARDS -->
+
+            <div class="dream-grid">
+
+
+
+                <!-- CARD ONE -->
+
+                <article class="dream-card">
+
+
+                    <div class="dream-icon">
+
+                        📚
+
+                    </div>
+
+
+                    <span class="dream-number">
+
+                        01
+
+                    </span>
+
+
+                    <h3>
+
+                        Knowledge
+
+                    </h3>
+
+
+                    <p>
+
+                        One chapter today,
+
+                        one concept tomorrow,
+
+                        and a little more confidence every day.
+
+                    </p>
+
+
+                </article>
+
+
+
+
+                <!-- CARD TWO -->
+
+                <article class="dream-card">
+
+
+                    <div class="dream-icon">
+
+                        🎯
+
+                    </div>
+
+
+                    <span class="dream-number">
+
+                        02
+
+                    </span>
+
+
+                    <h3>
+
+                        Consistency
+
+                    </h3>
+
+
+                    <p>
+
+                        Small efforts, repeated daily,
+
+                        can create some pretty big results.
+
+                    </p>
+
+
+                </article>
+
+
+
+
+                <!-- CARD THREE -->
+
+                <article class="dream-card">
+
+
+                    <div class="dream-icon">
+
+                        🏆
+
+                    </div>
+
+
+                    <span class="dream-number">
+
+                        03
+
+                    </span>
+
+
+                    <h3>
+
+                        Achievement
+
+                    </h3>
+
+
+                    <p>
+
+                        May your dedication take you
+
+                        closer to the future you imagine.
+
+                    </p>
+
+
+                </article>
+
+
+            </div>
+
+
+
+            <!-- FUNNY TOPPER NOTE -->
+
+            <div class="topper-note">
+
+
+                <div class="topper-note-icon">
+
+                    🎓
+
+                </div>
+
+
+
+                <div class="topper-note-content">
+
+
+                    <h3>
+
+                        Important Notice for Future Topper!
+
+                    </h3>
+
+
+
+                    <p>
+
+                        Diwali holidays are temporary,
+
+                        but the JEE question bank
+
+                        is apparently immortal.
+
+                        Remember to enjoy the festival too!
+
+                    </p>
+
+
+                </div>
+
+
+            </div>
+
+
+        </section>
+
+
+
+
+        <!-- =====================================
+             FUNNY SHAYARI SECTION
+        ====================================== -->
+
+        <section class="shayari-section" id="shayari">
+
+
+            <div class="section-heading">
+
+
+                <span class="section-label">
+
+                    A LITTLE TOPPER COMEDY
+
+                </span>
+
+
+
+                <h2>
+
+                    Diwali Meets
+
+                    <span class="gold-gradient">
+
+                        JEE Preparation
+
+                    </span>
+
+                </h2>
+
+
+
+                <p>
+
+                    Because even future toppers deserve
+
+                    a break from serious studying.
+
+                </p>
+
+
+            </div>
+
+
+
+            <article class="shayari-card">
+
+
+                <div class="shayari-decoration">
+
+                    ✨
+
+                </div>
+
+
+
+                <div class="shayari-label">
+
+                    SPECIAL SHAYARI FOR SAEE
+
+                </div>
+
+
+
+                <h3>
+
+                    The Future Topper's Diwali
+
+                </h3>
+
+
+
+                <div class="shayari-text">
+
+
+                    <p>
+
+                        Diye jalenge, mithai aayegi,
+
+                    </p>
+
+
+                    <p>
+
+                        Khushiyon ki baarish chhaayegi.
+
+                    </p>
+
+
+                    <p>
+
+                        Ek taraf laddoo, ek taraf book,
+
+                    </p>
+
+
+                    <p>
+
+                        Saee ka timetable dekh ke,
+
+                        calendar bhi bole, "Are you sure, look?"
+
+                    </p>
+
+
+                    <br>
+
+
+                    <p>
+
+                        Maths kahe, "Solve me, please!"
+
+                    </p>
+
+
+                    <p>
+
+                        Physics bole, "Find my keys!"
+
+                    </p>
+
+
+                    <p>
+
+                        Chemistry bhi thodi muskuraaye,
+
+                    </p>
+
+
+                    <p>
+
+                        JEE ka paper khud hi ghabraaye!
+
+                    </p>
+
+
+                    <br>
+
+
+                    <p class="shayari-ending">
+
+                        Bas ek dua hai iss Diwali,
+
+                    </p>
+
+
+                    <p class="shayari-ending">
+
+                        Khush rahe Saee har ek din,
+
+                    </p>
+
+
+                    <p class="shayari-ending">
+
+                        Aur topper banne ki race mein,
+
+                    </p>
+
+
+                    <p class="shayari-ending">
+
+                        Calculator bhi bole:
+
+                        "Madam, aap hi win!"
+
+                    </p>
+
+
+                </div>
+
+
+
+                <div class="shayari-footer">
+
+                    🪔 Happy Diwali, Future Topper! ✨
+
+                </div>
+
+
+            </article>
+
+
+        </section>
+
+
+
+
+        <!-- =====================================
+             FRIENDSHIP SECTION
+        ====================================== -->
+
+        <section class="friendship-section">
+
+
+            <div class="friendship-container">
+
+
+                <div class="friendship-icon">
+
+                    🌟
+
+                </div>
+
+
+
+                <span class="section-label">
+
+                    A SIMPLE THOUGHT
+
+                </span>
+
+
+
+                <h2>
+
+                    New Friendship,
+
+                    <br>
+
+                    <span class="gold-gradient">
+
+                        Good Vibes!
+
+                    </span>
+
+                </h2>
+
+
+
+                <p>
+
+                    Good friendships don't need grand promises.
+
+                    Sometimes, a little kindness,
+
+                    a random laugh, and a few good conversations
+
+                    are enough to make ordinary days memorable.
+
+                </p>
+
+
+
+                <div class="friendship-quote">
+
+                    "May life always give you reasons to smile,
+
+                    courage to chase your dreams,
+
+                    and people who make the journey enjoyable."
+
+                </div>
+
+
+
+            </div>
+
+
+        </section>
+
+
+
+
+        <!-- =====================================
+             FINAL DIWALI WISH
+        ====================================== -->
+
+        <section class="final-section">
+
+
+            <div class="final-diya">
+
+                🪔
+
+            </div>
+
+
+
+            <p class="final-eyebrow">
+
+                UNTIL THE NEXT CELEBRATION
+
+            </p>
+
+
+
+            <h2>
+
+                Keep Shining,
+
+                <br>
+
+                <span class="gold-gradient">
+
+                    Saee!
+
+                </span>
+
+            </h2>
+
+
+
+            <p class="final-message">
+
+                May your present be joyful,
+
+                your future be bright,
+
+                and your dreams find their way
+
+                into reality.
+
+            </p>
+
+
+
+            <button class="final-button"
+                    id="finalFireworksButton">
+
+                Celebrate Diwali ✨
+
+            </button>
+
+
+
+            <div class="final-wish">
+
+                शुभ दीपावली!
+
+            </div>
+
+
+        </section>
+
+
+
+        </main>
+
+
+
+        <!-- =====================================
+             FOOTER
+        ====================================== -->
+
+        <footer class="footer">
+
+
+            <div class="footer-symbol">
+
+                🪔
+
+            </div>
+
+
+
+            <h3>
+
+                Happy Diwali, Saee!
+
+            </h3>
+
+
+
+            <p>
+
+                A little webpage,
+
+                a lot of good wishes,
+
+                and endless possibilities.
+
+            </p>
+
+
+
+            <div class="footer-divider"></div>
+
+
+
+            <span class="footer-bottom">
+
+                Made with creativity and festive vibes.
+
+            </span>
+
+
+        </footer>
+
+
+
+    </div>
+
+
+
+    <!-- =====================================
+         JAVASCRIPT
+    ====================================== -->
+
+    <script src="script.js"></script>
+
 
 </body>
-</html>
+
+                  </html>
